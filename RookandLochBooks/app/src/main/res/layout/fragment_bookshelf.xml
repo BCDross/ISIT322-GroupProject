@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.bookshelf.BookshelfFragment">
 
     <TextView
@@ -15,6 +16,21 @@
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+    <ProgressBar
+        android:id="@+id/pb_loading"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+    <TextView
+        android:id="@+id/alert"
+        android:text="no books Returned!\nPlease refine your search query"
+        android:textSize="24sp"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
 
     <ListView
         android:id="@+id/listview"
