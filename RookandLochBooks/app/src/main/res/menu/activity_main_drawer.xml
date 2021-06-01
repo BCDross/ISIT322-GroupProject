@@ -19,6 +19,10 @@
         <item android:title="@string/menu_section_support">
             <menu>
                 <item
+                    android:id="@+id/nav_login"
+                    android:icon="@drawable/abc_vector_test"
+                    android:title="@string/menu_login" />
+                <item
                     android:id="@+id/nav_help"
                     android:icon="@drawable/abc_vector_test"
                     android:title="@string/menu_help" />

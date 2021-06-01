@@ -34,4 +34,10 @@
         android:name="com.hfad.rookandlochbooks.ui.support.PrivacyFragment"
         android:label="@string/menu_privacy"
         tools:layout="@layout/fragment_privacy" />
+
+    <fragment
+        android:id="@+id/nav_login"
+        android:name="com.hfad.rookandlochbooks.ui.login.LoginFragment"
+        android:label="@string/menu_login"
+        tools:layout="@layout/fragment_login" />
 </navigation>
