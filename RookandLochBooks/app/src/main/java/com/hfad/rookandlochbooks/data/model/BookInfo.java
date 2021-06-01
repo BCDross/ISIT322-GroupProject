@@ -1,8 +1,6 @@
 package com.hfad.rookandlochbooks.data.model;
-import java.util.List;
 
 import java.util.List;
-
 
 public class BookInfo {
 
