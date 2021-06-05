@@ -2,7 +2,7 @@ package com.hfad.rookandlochbooks.data.model;
 
 import java.util.List;
 
-public class BookInfo {
+public class Book {
 
     private String title;
     private String subtitle;
@@ -15,6 +15,8 @@ public class BookInfo {
     private Integer pageCount;
     private String printType;
     private List<String> categories = null;
+    private Integer averageRating;
+    private Integer ratingsCount;
     private String maturityRating;
     private Boolean allowAnonLogging;
     private String contentVersion;
@@ -24,6 +26,21 @@ public class BookInfo {
     private String previewLink;
     private String infoLink;
     private String canonicalVolumeLink;
+
+    public Book(String title, List<String> authors, String description, Integer averageRating, String bookImages, String lrgBookImages) {
+
+        ImageLinks d = new ImageLinks();
+        d.setSmallThumbnail(bookImages);
+        d.setThumbnail(lrgBookImages);
+        this.title = title;
+        this.authors = authors;
+        this.description = description;
+        this.averageRating = averageRating;
+        this.imageLinks = d;
+
+    }
+
+
     public String getTitle() {
         return title;
     }
@@ -112,6 +129,14 @@ public class BookInfo {
         this.categories = categories;
     }
 
+    public Integer getAverageRating() { return averageRating; }
+
+    public void setAverageRating(Integer averageRating) {this.averageRating = averageRating;  }
+
+    public Integer getRatingsCount() {return ratingsCount;  }
+
+    public void setRatingsCount(Integer ratingsCount) { this.ratingsCount = ratingsCount;}
+
     public String getMaturityRating() {
         return maturityRating;
     }
@@ -124,9 +149,7 @@ public class BookInfo {
         return allowAnonLogging;
     }
 
-    public void setAllowAnonLogging(Boolean allowAnonLogging) {
-        this.allowAnonLogging = allowAnonLogging;
-    }
+    public void setAllowAnonLogging(Boolean allowAnonLogging) { this.allowAnonLogging = allowAnonLogging;}
 
     public String getContentVersion() {
         return contentVersion;
