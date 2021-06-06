@@ -11,6 +11,7 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="title_activity_scrolling">ScrollingActivity</string>
+    <string name="camera">Camera</string>
 
     <!-- Strings related to the navigation -->
     <string name="action_settings">Settings</string>

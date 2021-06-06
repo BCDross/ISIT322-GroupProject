@@ -25,6 +25,7 @@ public class CreateReviewFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        container.removeAllViews();
         return inflater.inflate(R.layout.fragment_create_review, container, false);
     }
 

@@ -35,7 +35,7 @@ public class LoginFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-
+        container.removeAllViews();
         binding = FragmentLoginBinding.inflate(inflater, container, false);
         return binding.getRoot();
 

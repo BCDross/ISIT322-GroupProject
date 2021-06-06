@@ -66,8 +66,8 @@ public class MainActivity extends AppCompatActivity {
             /**
              * It gets into the above IF-BLOCK if anywhere the screen is touched.
              */
-            View v = getCurrentFocus();
-            if ( v instanceof EditText) {
+            View view = getCurrentFocus();
+            if (view instanceof EditText) {
                 /**
                  * Now, it gets into the above IF-BLOCK if an EditText is already in focus, and you tap somewhere else
                  * to take the focus away from that particular EditText. It could have 2 cases after tapping:
@@ -75,14 +75,14 @@ public class MainActivity extends AppCompatActivity {
                  * 2. Focus is just shifted to the other EditText
                  */
                 Rect outRect = new Rect();
-                v.getGlobalVisibleRect(outRect);
+                view.getGlobalVisibleRect(outRect);
                 if (!outRect.contains((int)event.getRawX(), (int)event.getRawY())) {
-                    v.clearFocus();
-                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                    view.clearFocus();
+                    InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 }
             }
         }
-        return super.dispatchTouchEvent( event );
+        return super.dispatchTouchEvent(event);
     }
 }

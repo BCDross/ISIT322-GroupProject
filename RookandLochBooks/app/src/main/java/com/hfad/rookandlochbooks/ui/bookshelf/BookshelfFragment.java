@@ -21,6 +21,7 @@ public class BookshelfFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        container.removeAllViews();
         bookshelfViewModel =
                 new ViewModelProvider(this).get(BookshelfViewModel.class);
 

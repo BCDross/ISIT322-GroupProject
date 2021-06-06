@@ -40,4 +40,10 @@
         android:name="com.hfad.rookandlochbooks.ui.login.LoginFragment"
         android:label="@string/menu_login"
         tools:layout="@layout/fragment_login" />
+
+    <fragment
+        android:id="@+id/camera_fragment"
+        android:name="com.hfad.rookandlochbooks.ui.sensor.CameraFragment"
+        android:label="@string/camera"
+        tools:layout="@layout/camera_fragment" />
 </navigation>
