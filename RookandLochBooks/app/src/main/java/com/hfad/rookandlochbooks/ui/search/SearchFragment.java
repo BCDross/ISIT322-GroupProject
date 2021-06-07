@@ -28,31 +28,44 @@ public class SearchFragment extends Fragment {
     private Button btnSearch;
     private EditText srcText;
 
+
+
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         container.removeAllViews();
         searchViewModel = new ViewModelProvider(this).get(SearchViewModel.class);
         binding = FragmentSearchBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+        FragmentManager supportFragmentManager = getActivity().getSupportFragmentManager();
 
         btnSearch = binding.btnSearchDetail;
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                openFragment();
             }
-        });
 
-        binding.searchTitle.getText().toString();
+            private void openFragment() {
+                //initiate fragment to open.
+                BookListFragment destination = new BookListFragment();
+                supportFragmentManager.beginTransaction()
+                        .replace(R.id.searchContraint, destination, "Fragment_TAG")
+                        .setReorderingAllowed(true)
+                        .addToBackStack(null) // name can be null
+                        .commit();
+            }
 
+/*
         final TextView textView = binding.textSearch;
         searchViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
             }
-        });
 
+*/
+        });
         final Button cameraButton = binding.btnScanBarcode;
         cameraButton.setOnClickListener(new View.OnClickListener() {
             @Override

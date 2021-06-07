@@ -3,11 +3,12 @@ package com.hfad.rookandlochbooks.ui.search;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.hfad.rookandlochbooks.placeholder.PlaceholderContent.PlaceholderItem;
-import com.hfad.rookandlochbooks.databinding.FragmentBooklistBinding;
+import com.hfad.rookandlochbooks.databinding.FragmentBooklistListBinding;
 
 import java.util.List;
 
@@ -26,15 +27,15 @@ public class MyBookListRecyclerViewAdapter extends RecyclerView.Adapter<MyBookLi
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        return new ViewHolder(FragmentBooklistBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
+       return new ViewHolder(FragmentBooklistListBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
 
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+/*        holder.mIdView.setText(mValues.get(position).id);
+        holder.mContentView.setText(mValues.get(position).content);*/
     }
 
     @Override
@@ -43,19 +44,25 @@ public class MyBookListRecyclerViewAdapter extends RecyclerView.Adapter<MyBookLi
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public final TextView mIdView;
-        public final TextView mContentView;
+        public final RecyclerView mIdView;
+        public final RecyclerView mContentView;
         public PlaceholderItem mItem;
 
-        public ViewHolder(FragmentBooklistBinding binding) {
+
+
+
+
+
+
+        public ViewHolder(FragmentBooklistListBinding binding) {
             super(binding.getRoot());
-            mIdView = binding.itemNumber;
-            mContentView = binding.content;
+            mIdView = binding.getRoot();
+            mContentView = binding.recycleView;
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            return super.toString() + " '" + "rrrr" + "'";
         }
     }
 }
