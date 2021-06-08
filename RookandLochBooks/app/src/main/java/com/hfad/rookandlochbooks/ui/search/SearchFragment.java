@@ -1,5 +1,6 @@
 package com.hfad.rookandlochbooks.ui.search;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +11,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
@@ -26,6 +29,7 @@ public class SearchFragment extends Fragment {
     private SearchViewModel searchViewModel;
     private FragmentSearchBinding binding;
     private Button btnSearch;
+    private String srcQuery;
     private EditText srcText;
 
 
@@ -40,6 +44,7 @@ public class SearchFragment extends Fragment {
         FragmentManager supportFragmentManager = getActivity().getSupportFragmentManager();
 
         btnSearch = binding.btnSearchDetail;
+
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,14 +53,75 @@ public class SearchFragment extends Fragment {
 
             private void openFragment() {
                 //initiate fragment to open.
+                if (binding.searchTitleField.getText().toString().isEmpty()) {
+                    binding.searchTitleField.setError("Please enter search Title Detail");
+                    return;
+                 } else {
+                    srcQuery = urlBuilder (binding.searchTitleField.getText().toString());
+                }
+
+
+/*
+
+                if (!binding.searchTitleField.getText().toString().isEmpty()) {binding.searchTitleField.getText();}
+
+
+                binding.searchTitleField.gettext().toString() +
+                            binding.searchTitleField.getText().toString().isEmpty()
+                        "+inauthor="
+                }
+                String d =
+
+                intitle: Returns results where the text following this keyword is found in the title.
+                inauthor: Returns results where the text following this keyword is found in the author.
+                inpublisher: Returns results where the text following this keyword is found in the publisher.
+                subject: Returns results where the text following this keyword is listed in the category list of the volume.
+
+
+
+                // Pass between Activity and Fragment Class
+
+                Bundle bundle = new Bundle();
+                 String myMessage = "Stack Overflow is cool!";
+                 bundle.putString("message", myMessage );
+                 FragmentClass fragInfo = new FragmentClass();
+                 fragInfo.setArguments(bundle);
+                 transaction.replace(R.id.fragment_single, fragInfo);
+                 transaction.commit();
+
+                  @Override
+                 public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+                    String myValue = this.getArguments().getString("message");
+                    ...
+                 }
+
+
+*/
+
+                Bundle bundle = new Bundle();
+                bundle.putString("fedEx",srcQuery);
                 BookListFragment destination = new BookListFragment();
+                destination.setArguments(bundle);
                 supportFragmentManager.beginTransaction()
                         .replace(R.id.searchContraint, destination, "Fragment_TAG")
                         .setReorderingAllowed(true)
                         .addToBackStack(null) // name can be null
                         .commit();
+
             }
 
+            final String urlBuilder (String srcQuery){
+                Uri.Builder builder = new Uri.Builder();
+                builder.scheme("https")
+                        .authority("www.googleapis.com")
+                        .appendPath("books")
+                        .appendPath("v1")
+                        .appendPath("volumes")
+                        .appendQueryParameter("q", srcQuery)
+                        .appendQueryParameter("orderby", "relevance")
+                        .appendQueryParameter("maxResults","40");
+                return srcQuery = builder.build().toString();
+            }
 /*
         final TextView textView = binding.textSearch;
         searchViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
@@ -64,6 +130,8 @@ public class SearchFragment extends Fragment {
                 textView.setText(s);
             }
 
+
+https://www.googleapis.com/books/v1/volumes?q=python trick
 */
         });
         final Button cameraButton = binding.btnScanBarcode;
@@ -81,6 +149,7 @@ public class SearchFragment extends Fragment {
         });
 
         return root;
+
     }
 
     @Override

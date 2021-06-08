@@ -26,56 +26,34 @@ import java.util.List;
 
 /**
  * A fragment representing a list of Items.
+ *
  */
 public class BookListFragment extends Fragment {
 
     //binding to fragment_booklist_list Layout
     private FragmentBooklistListBinding binding;
     private RequestQueue requestQueue;
-    private String url = "https://www.googleapis.com/books/v1/volumes?q=python trick";
+    private String url;
     private List<Book> bookList;
     // Require Empty Constructor
     public BookListFragment() {
     }
 
-/*
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
-    public static BookListFragment newInstance(int columnCount) {
-        BookListFragment fragment = new BookListFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-        }
-    }
-*/
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        //Extract the URL passed between fragments.
+        url = this.getArguments().getString("fedEx");
         container.removeAllViews();
         binding = FragmentBooklistListBinding.inflate(inflater,container,false);
-        /*View view = inflater.inflate(R.layout.fragment_booklist_list, container, false);*/
-
-        // Set the adapter
-        /*if (binding.recycleView instanceof RecyclerView) {*/
-            Context context = binding.getRoot().getContext();
-            RecyclerView recyclerView = (RecyclerView) binding.recycleView;
-            recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        Context context = binding.getRoot().getContext();
+        RecyclerView recyclerView = (RecyclerView) binding.recycleView;
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
         requestQueue = BookAPIController.getmInstance(context).getRequestQueue();
+
         JsonObjectRequest jsonObjectRequest = BookAPIController.getBookList(url,context,recyclerView);
         requestQueue.add(jsonObjectRequest);
-
-        /*}*/
         return binding.getRoot();
     }
 

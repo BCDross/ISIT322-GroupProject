@@ -11,6 +11,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RookAndLochBooks"
         android:usesCleartextTraffic="true">
+
+
+
+        <activity android:name=".ui.review.BookDetailActivity"
+            android:label="Books Are fun"
+            android:theme="@style/Theme.RookAndLochBooks.NoActionBar" />
+
         <activity
             android:name=".data.ScrollingActivity"
             android:label="@string/title_activity_scrolling"
