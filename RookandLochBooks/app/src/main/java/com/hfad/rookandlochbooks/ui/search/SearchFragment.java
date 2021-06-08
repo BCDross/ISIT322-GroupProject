@@ -60,44 +60,6 @@ public class SearchFragment extends Fragment {
                     srcQuery = urlBuilder (binding.searchTitleField.getText().toString());
                 }
 
-
-/*
-
-                if (!binding.searchTitleField.getText().toString().isEmpty()) {binding.searchTitleField.getText();}
-
-
-                binding.searchTitleField.gettext().toString() +
-                            binding.searchTitleField.getText().toString().isEmpty()
-                        "+inauthor="
-                }
-                String d =
-
-                intitle: Returns results where the text following this keyword is found in the title.
-                inauthor: Returns results where the text following this keyword is found in the author.
-                inpublisher: Returns results where the text following this keyword is found in the publisher.
-                subject: Returns results where the text following this keyword is listed in the category list of the volume.
-
-
-
-                // Pass between Activity and Fragment Class
-
-                Bundle bundle = new Bundle();
-                 String myMessage = "Stack Overflow is cool!";
-                 bundle.putString("message", myMessage );
-                 FragmentClass fragInfo = new FragmentClass();
-                 fragInfo.setArguments(bundle);
-                 transaction.replace(R.id.fragment_single, fragInfo);
-                 transaction.commit();
-
-                  @Override
-                 public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-                    String myValue = this.getArguments().getString("message");
-                    ...
-                 }
-
-
-*/
-
                 Bundle bundle = new Bundle();
                 bundle.putString("fedEx",srcQuery);
                 BookListFragment destination = new BookListFragment();
@@ -107,10 +69,16 @@ public class SearchFragment extends Fragment {
                         .setReorderingAllowed(true)
                         .addToBackStack(null) // name can be null
                         .commit();
-
             }
 
+            // added method to simplify URL setup.
             final String urlBuilder (String srcQuery){
+                /*
+                intitle: Returns results where the text following this keyword is found in the title.
+                inauthor: Returns results where the text following this keyword is found in the author.
+                inpublisher: Returns results where the text following this keyword is found in the publisher.
+                subject: Returns results where the text following this keyword is listed in the category list of the volume.
+                */
                 Uri.Builder builder = new Uri.Builder();
                 builder.scheme("https")
                         .authority("www.googleapis.com")
