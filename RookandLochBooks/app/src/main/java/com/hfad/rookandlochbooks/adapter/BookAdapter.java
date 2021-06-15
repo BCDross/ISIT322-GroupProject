@@ -3,6 +3,7 @@ package com.hfad.rookandlochbooks.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +40,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.Bookshelf> {
     public void onBindViewHolder(@NonNull @org.jetbrains.annotations.NotNull Bookshelf holder, int position) {
         String authors="";
         Book book = bookList.get(position);
+        Log.d(getClass().getSimpleName(), "Booklist Position: " + position);
 
         for (int j = 0; j < book.getAuthors().size(); j++) {
             if (j == 0) {
@@ -47,6 +49,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.Bookshelf> {
                 authors += ", " + book.getAuthors().get(j).toString();
             }
         }
+
         holder.title.setText(book.getTitle().toString());
         holder.description.setText(book.getDescription().toString());
         holder.rating.setText(book.getAverageRating().toString());

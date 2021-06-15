@@ -3,6 +3,7 @@ package com.hfad.rookandlochbooks.controller;
 import android.content.Context;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
@@ -14,6 +15,7 @@ import com.android.volley.toolbox.Volley;
 import com.hfad.rookandlochbooks.adapter.BookAdapter;
 import com.hfad.rookandlochbooks.data.model.Book;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -47,7 +49,6 @@ public class BookAPIController {
             @Override
             public void onResponse(JSONObject response) {
                 try{
-
                     JSONArray jsonItems = response.getJSONArray("items");
                     // Loop through the array elements
                     for(int i=0;i<jsonItems.length();i++){
@@ -83,6 +84,22 @@ public class BookAPIController {
                 //Add to recyclerView
                 BookAdapter adapter = new BookAdapter(context,bookList);
                 recyclerView.setAdapter(adapter);
+                //pagination();
+            }
+
+            private void pagination() {
+                recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                    @Override
+                    public void onScrollStateChanged(@NonNull @NotNull RecyclerView recyclerView, int newState) {
+                        super.onScrollStateChanged(recyclerView, newState);
+                    }
+
+                    @Override
+                    public void onScrolled(@NonNull @NotNull RecyclerView recyclerView, int dx, int dy) {
+                        super.onScrolled(recyclerView, dx, dy);
+
+                    }
+                });
             }
         },
                 new Response.ErrorListener(){

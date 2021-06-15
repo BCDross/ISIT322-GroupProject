@@ -47,7 +47,7 @@ public class RookLochDatabaseHelper extends SQLiteOpenHelper {
         ContentValues userValues = new ContentValues();
         userValues.put("Password", password);
         userValues.put("UserID", userID);
-        db.insert("User", null, userValues);
+        db.insert("Security", null, userValues);
     }
 
     private static void insertBookshelf(SQLiteDatabase db, String name, String description, int userID) {
@@ -55,29 +55,29 @@ public class RookLochDatabaseHelper extends SQLiteOpenHelper {
         userValues.put("Name", name);
         userValues.put("Description", description);
         userValues.put ("UserId", userID);
-        db.insert("User", null, userValues);
+        db.insert("Bookshelf", null, userValues);
     }
 
-    private static void insertReview(SQLiteDatabase db, String title, String description, String userID) {
+    private static void insertReview(SQLiteDatabase db, String title, String description, int userID) {
         ContentValues userValues = new ContentValues();
         userValues.put("Title", title);
         userValues.put("Description", description);
         userValues.put ("UserID", userID);
-        db.insert("User", null, userValues);
+        db.insert("Review", null, userValues);
     }
 
     private static void insertLinkReviewBook(SQLiteDatabase db, int bookID, int reviewID) {
         ContentValues userValues = new ContentValues();
         userValues.put("BookID", bookID);
         userValues.put("ReviewID", reviewID);
-        db.insert("User", null, userValues);
+        db.insert("LinkReviewBook", null, userValues);
     }
 
     private static void insertBookBookshelf(SQLiteDatabase db, int bookID, int bookshelfID) {
         ContentValues userValues = new ContentValues();
         userValues.put("BookID", bookID);
         userValues.put("BookshelfID", bookshelfID);
-        db.insert("User", null, userValues);
+        db.insert("LinkBookBookshelf", null, userValues);
     }
 
     // This is the update method that does all the work. Needs to have a new if statement for each version to be able to do
@@ -130,10 +130,10 @@ public class RookLochDatabaseHelper extends SQLiteOpenHelper {
                     + "ReviewID INTEGER, "
                     + "BookID INTEGER);");
 
-            insertLinkReviewBook("db", 1, 1);
-            insertLinkReviewBook("db", 2, 1);
-            insertLinkReviewBook("db", 3, 1);
-            insertLinkReviewBook("db", 4, 1);
+            insertLinkReviewBook(db, 1, 1);
+            insertLinkReviewBook(db, 2, 1);
+            insertLinkReviewBook(db, 3, 1);
+            insertLinkReviewBook(db, 4, 1);
 
 
             db.execSQL("CREATE TABLE LinkBookBookshelf (LinkID INTEGER PRIMARY KEY AUTOINCREMENT, "

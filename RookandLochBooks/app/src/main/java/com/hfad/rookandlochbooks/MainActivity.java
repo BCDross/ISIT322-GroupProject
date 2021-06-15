@@ -3,6 +3,7 @@ package com.hfad.rookandlochbooks;
 import android.content.Context;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Menu;
@@ -21,6 +22,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.hfad.rookandlochbooks.databinding.ActivityMainBinding;
 
+import static android.content.ContentValues.TAG;
+
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
@@ -29,6 +32,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Added to initialize database and create the tables.
+        RookLochDatabaseHelper db = new RookLochDatabaseHelper(this);
+        db.getReadableDatabase();
+        Log.d(TAG, "onCreate: " + db.getDatabaseName() );
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
