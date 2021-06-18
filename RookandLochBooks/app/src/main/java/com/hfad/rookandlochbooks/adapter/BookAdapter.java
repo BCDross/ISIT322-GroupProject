@@ -22,6 +22,7 @@ import java.util.List;
 
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.Bookshelf> {
 
+    private static final String TAG = BookAdapter.class.getSimpleName();
     private Context context;
     private List<Book> bookList;
     public BookAdapter (Context context, List<Book> books ){
@@ -42,36 +43,45 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.Bookshelf> {
         Book book = bookList.get(position);
         Log.d(getClass().getSimpleName(), "Booklist Position: " + position);
 
-        for (int j = 0; j < book.getAuthors().size(); j++) {
-            if (j == 0) {
-                authors += book.getAuthors().get(j).toString();
-            } else {
-                authors += ", " + book.getAuthors().get(j).toString();
+        try {
+            for (int j = 0; j < book.getAuthors().size(); j++) {
+                if (j == 0) {
+                    authors += book.getAuthors().get(j).toString();
+                } else {
+                    authors += ", " + book.getAuthors().get(j).toString();
+                }
             }
-        }
 
-        holder.title.setText(book.getTitle().toString());
-        holder.description.setText(book.getDescription().toString());
-        holder.rating.setText(book.getAverageRating().toString());
-        holder.author.setText(authors);
-        
-        Glide.with(context)
-                .load(book.getImageLinks().getSmallThumbnail())
-                .into(holder.imageView);
-        
-        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, BookDetailActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("title",book.getTitle());
-                bundle.putString("description",book.getDescription());
-                bundle.putInt("rating",book.getAverageRating());
-                bundle.putString("thumbnail",book.getImageLinks().getThumbnail());                               
-                intent.putExtras(bundle);
-                context.startActivity(intent);
-            }
-        });
+            holder.title.setText(book.getTitle().toString());
+            holder.description.setText(book.getDescription().toString());
+            holder.rating.setText(book.getAverageRating().toString());
+            holder.author.setText(authors);
+
+            Glide.with(context)
+                    .load(book.getImageLinks().getSmallThumbnail())
+                    .into(holder.imageView);
+
+            holder.linearLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, BookDetailActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("title",book.getTitle());
+                    bundle.putString("description",book.getDescription());
+                    bundle.putInt("rating",book.getAverageRating());
+                    bundle.putString("thumbnail",book.getImageLinks().getThumbnail());
+                    intent.putExtras(bundle);
+                    context.startActivity(intent);
+                }
+            });
+
+
+
+
+        } catch (Exception e ){
+            Log.d(TAG, "onBindViewHolder: "+ e.getMessage());
+            e.getStackTrace();
+        }
 
     }
 

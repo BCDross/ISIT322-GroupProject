@@ -10,7 +10,6 @@ import android.view.Menu;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.navigation.NavController;
@@ -20,6 +19,8 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.hfad.rookandlochbooks.data.RockLochDBOperations;
+import com.hfad.rookandlochbooks.data.RookLochDatabaseHelper;
 import com.hfad.rookandlochbooks.databinding.ActivityMainBinding;
 
 import static android.content.ContentValues.TAG;
@@ -33,10 +34,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //Added to initialize database and create the tables.
-        RookLochDatabaseHelper db = new RookLochDatabaseHelper(this);
-        db.getReadableDatabase();
-        Log.d(TAG, "onCreate: " + db.getDatabaseName() );
-
+        RookLochDatabaseHelper dbHelper = new RookLochDatabaseHelper(this);
+        RockLochDBOperations db = new RockLochDBOperations(this);
+        db.open();
+        Log.d(TAG, "onCreate: " + dbHelper.getDatabaseName() );
+        db.close();
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 

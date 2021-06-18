@@ -1,6 +1,7 @@
 package com.hfad.rookandlochbooks.controller;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -25,6 +26,7 @@ import java.util.List;
 
 
 public class BookAPIController {
+    private static final String TAG = BookAPIController.class.getSimpleName() ;
     private RequestQueue requestQueue;
     private static BookAPIController mInstance;
     private static List<Book> bookList;
@@ -56,12 +58,10 @@ public class BookAPIController {
                         JSONObject jsonObject = jsonItems.getJSONObject(i);
                         JSONObject bookVolumeInfo = jsonObject.getJSONObject("volumeInfo");
                         String title= bookVolumeInfo.getString("title");
-                        String description = bookVolumeInfo.getString("description");
+                        String description = (bookVolumeInfo.has("description")) ? description = bookVolumeInfo.getString("description"): "None";
                         // Setting default rating for missing rating values.
-                        Integer rating = 3;
-                        if (bookVolumeInfo.has(("averageRating"))) {
-                            rating = bookVolumeInfo.getInt("averageRating");
-                        }
+                        Integer rating = (bookVolumeInfo.has(("averageRating"))) ? rating = bookVolumeInfo.getInt("averageRating"): 3;
+
                         List<String> authors =new ArrayList<String>();
                         if (bookVolumeInfo.has("authors")) {
                             // Extract the JSONArray for the key called "authors"
@@ -79,6 +79,7 @@ public class BookAPIController {
                         bookList.add (book);
                     }
                 }catch (JSONException e){
+                    Log.d(TAG, "onResponse:  " + e.getMessage());
                     e.printStackTrace();
                 }
                 //Add to recyclerView
@@ -97,7 +98,6 @@ public class BookAPIController {
                     @Override
                     public void onScrolled(@NonNull @NotNull RecyclerView recyclerView, int dx, int dy) {
                         super.onScrolled(recyclerView, dx, dy);
-
                     }
                 });
             }
