@@ -147,8 +147,10 @@ public class RookLochDatabaseHelper extends SQLiteOpenHelper {
         }
 
         //This adds a new columns to the table. This is currently just a placeholder for future development.
-        if (oldVersion < 2) {
-            db.execSQL("ALTER TABLE Book ADD COLUMN AUTHOR TEXT;");
-        }
+        //Travis: Commented out for the time being, an error was occurring saying it's a duplicate column and the app was crashing at launch.
+        //        Not sure about the best resolution for this. Can re-enable if I forgot to un-comment this.
+        //if (oldVersion < 2) {
+        //    db.execSQL("ALTER TABLE Book ADD COLUMN AUTHOR TEXT;");
+        //}
     }
 }
