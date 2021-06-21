@@ -12,7 +12,22 @@ RookLochDatabaseHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "rookLochBooks";
     private static final int DB_VERSION = 1;
     private static final String TAG = RookLochDatabaseHelper.class.getName();
-    private Context context;
+    private Context context ;
+
+    private static RookLochDatabaseHelper sInstance;
+
+    // ...
+
+    public static synchronized RookLochDatabaseHelper getInstance(Context context) {
+        // Use the application context, which will ensure that you
+        // don't accidentally leak an Activity's context.
+        // See this article for more information: http://bit.ly/6LRzfx
+        if (sInstance == null) {
+            sInstance = new RookLochDatabaseHelper(context.getApplicationContext());
+        }
+        return sInstance;
+    }
+
 
     public RookLochDatabaseHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -28,12 +43,12 @@ RookLochDatabaseHelper extends SQLiteOpenHelper {
         updateMyDatabase(db, oldVersion, newVersion);
     }
 
+
     // This is the update method that does all the work. Needs to have a new if statement for each version to be able to do
     // incremental upgrades.
     private void updateMyDatabase(SQLiteDatabase db, int oldVersion, int newVersion) {
         //This creates a new database that is empty.
-        RockLochDBOperations dbOperations= new RockLochDBOperations(context);
-  
+        RockLochDBOperations dbOperations= new RockLochDBOperations();
 
         if (oldVersion < 1) {
             db.execSQL("CREATE TABLE Book (BookID INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -55,12 +70,14 @@ RookLochDatabaseHelper extends SQLiteOpenHelper {
             + "Deleted BOOL);");
 
             dbOperations.insertUser(db, "TestFirst", "TestLast", "test@bc.com", false);
+            dbOperations.insertUser(db, "Andrew", "Lawson", "andrew.lawson@bellevuecollege.edu", false);
 
             db.execSQL("CREATE TABLE Security (SecurityID INTEGER PRIMARY KEY AUTOINCREMENT, "
             + "Password TEXT, "
             + "UserID INTEGER);");
 
-            dbOperations.insertSecurity(db, "Test", 1);
+            dbOperations.insertSecurity(db, "LetMeIn", 1);
+            dbOperations.insertSecurity(db, "LetMeIn", 2);
 
             db.execSQL("CREATE TABLE Bookshelf (BookshelfID INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + "Name TEXT, "
@@ -94,6 +111,8 @@ RookLochDatabaseHelper extends SQLiteOpenHelper {
             dbOperations.insertBookBookshelf(db, 2, 1);
             dbOperations.insertBookBookshelf(db, 3, 1);
             dbOperations.insertBookBookshelf(db, 4, 1);
+
+
         }
 
         //This adds a new columns to the table. This is currently just a placeholder for future development.
@@ -102,6 +121,6 @@ RookLochDatabaseHelper extends SQLiteOpenHelper {
             Log.d(TAG, "updateMyDatabase: Where alter table call is made");
         }
 
-        dbOperations.close();
+        //db.close();
     }
 }

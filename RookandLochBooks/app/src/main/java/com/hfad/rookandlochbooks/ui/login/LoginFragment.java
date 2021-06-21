@@ -1,5 +1,6 @@
 package com.hfad.rookandlochbooks.ui.login;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.annotation.NonNull;
@@ -7,6 +8,9 @@ import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -21,14 +25,26 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hfad.rookandlochbooks.MainActivity;
+import com.hfad.rookandlochbooks.data.RookLochDatabaseHelper;
+import com.hfad.rookandlochbooks.data.session.SessionManager;
 import com.hfad.rookandlochbooks.databinding.FragmentLoginBinding;
 
 import com.hfad.rookandlochbooks.R;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+
+import java.util.Calendar;
+import java.util.Date;
+
 
 public class LoginFragment extends Fragment {
 
     private LoginViewModel loginViewModel;
     private FragmentLoginBinding binding;
+    private RookLochDatabaseHelper dbHelper;
+    private Context context;
+
 
     @Nullable
     @Override
@@ -109,7 +125,7 @@ public class LoginFragment extends Fragment {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     loginViewModel.login(usernameEditText.getText().toString(),
-                            passwordEditText.getText().toString());
+                            passwordEditText.getText().toString(),setupDBList());
                 }
                 return false;
             }
@@ -120,7 +136,8 @@ public class LoginFragment extends Fragment {
             public void onClick(View v) {
                 loadingProgressBar.setVisibility(View.VISIBLE);
                 loginViewModel.login(usernameEditText.getText().toString(),
-                        passwordEditText.getText().toString());
+                        passwordEditText.getText().toString(),setupDBList());
+
             }
         });
     }
@@ -128,8 +145,15 @@ public class LoginFragment extends Fragment {
     private void updateUiWithUser(LoggedInUserView model) {
         String welcome = getString(R.string.welcome) + model.getDisplayName();
         // TODO : initiate successful logged in experience
+        Date currentTime = Calendar.getInstance().getTime();
+        Boolean sessionIsActive = SessionManager.isSessionActive(currentTime,LoginFragment.this.getContext());
+        SessionManager.startUserSession(LoginFragment.this.getContext(), 1800);
+        SessionManager.storedUserToken(LoginFragment.this.getContext(), "randomUserToken");
         if (getContext() != null && getContext().getApplicationContext() != null) {
             Toast.makeText(getContext().getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
+            //Redirect users to Main Page once logged in.
+            Intent intent = new Intent(LoginFragment.this.getActivity(), MainActivity.class);
+            startActivity(intent);
         }
     }
 
@@ -142,9 +166,30 @@ public class LoginFragment extends Fragment {
         }
     }
 
+
+    public void onBackPressed()
+    {
+        new AlertDialog.Builder(LoginFragment.this.getActivity()).setIcon(android.R.drawable.ic_dialog_alert).setTitle("Exit")
+                .setMessage("Are you sure you want to exit?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //ToDO - Add in step to exit.
+                    }
+                }).setNegativeButton("No", null).show();
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
     }
+
+
+    private RookLochDatabaseHelper setupDBList() {
+        return new RookLochDatabaseHelper(getContext().getApplicationContext());
+
+    }
+
+
 }
