@@ -2,6 +2,7 @@ package com.hfad.rookandlochbooks;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.graphics.Rect;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
@@ -26,6 +28,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.hfad.rookandlochbooks.data.RockLochDBOperations;
 import com.hfad.rookandlochbooks.data.RookLochDatabaseHelper;
+import com.hfad.rookandlochbooks.data.model.LoggedInUser;
 import com.hfad.rookandlochbooks.data.session.SessionManager;
 import com.hfad.rookandlochbooks.databinding.ActivityMainBinding;
 import com.hfad.rookandlochbooks.ui.login.LoginFragment;
@@ -78,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-
         if (!sessionIsActive) {
             supportFragmentManager.beginTransaction()
                     .replace(binding.drawerLayout.getId(),new LoginFragment(), "Fragment_TAG")
@@ -87,6 +89,28 @@ public class MainActivity extends AppCompatActivity {
                     .commit();
             //    Intent intent = new Intent(this, LoginFragment.class);
             //   startActivity(intent);
+        }
+        String UserID = SessionManager.getUserToken(this);
+
+        //To change the Nav header text, I needed  to instantiate the getHeaderView
+        View headerView = navigationView.getHeaderView(0);
+        //Once defined, I can now find the text views on the Nav Header section
+        TextView loggedInAcct = (TextView) headerView.findViewById(R.id.LoggedInAcct);
+        TextView loggedInDisplayName = (TextView) headerView.findViewById(R.id.LoggedInDisplayName);
+
+
+        db = dbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select U.UserID,FirstName,LastName,EmailAddress,Password from User U inner join Security S on S.UserID=U.UserID WHERE "
+                        + "U.UserID =?",
+                new String[]{UserID.toString()});
+
+        if (cursor != null) {
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                String insertText = cursor.getString(1) + " " + cursor.getString(2);
+                loggedInDisplayName.setText(insertText);
+                loggedInAcct.setText(cursor.getString(3));
+            }
         }
 
     }
