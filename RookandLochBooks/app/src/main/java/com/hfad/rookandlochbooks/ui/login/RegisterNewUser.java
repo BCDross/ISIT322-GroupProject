@@ -13,15 +13,13 @@ import android.widget.Button;
 import com.hfad.rookandlochbooks.MainActivity;
 import com.hfad.rookandlochbooks.R;
 
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.hfad.rookandlochbooks.data.RookLochDBOperations;
 import com.hfad.rookandlochbooks.data.RookLochDatabaseHelper;
 
 public class RegisterNewUser extends AppCompatActivity {
-
-
-
 
     private SQLiteDatabase db;
     private boolean failedRegistation;
@@ -34,39 +32,45 @@ public class RegisterNewUser extends AppCompatActivity {
 
         RookLochDatabaseHelper dbHelper = new RookLochDatabaseHelper(this);
         db = dbHelper.getWritableDatabase();
-
-        View newUserFirstName = findViewById(R.id.newUserFirstName);
-        View newUserLastName = findViewById(R.id.newUserLastName);
-        View newUserEmail = findViewById(R.id.newUserEmail);
-        View newUserPassword = findViewById(R.id.newUserPassword);
         Button registerNewUserBtn = findViewById(R.id.registerNewUserBtn);
-
-
 
 
         registerNewUserBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                EditText newUserFirstName = findViewById(R.id.newUserFirstName);
+                EditText newUserLastName = findViewById(R.id.newUserLastName);
+                EditText newUserEmail = findViewById(R.id.newUserEmail);
+                EditText newUserPassword = findViewById(R.id.newUserPassword);
+                String newFirstNameString = newUserFirstName.getText().toString();
+                String newLastNameString = newUserLastName.getText().toString();
+                String newEmailString = newUserEmail.getText().toString();
+                String newPasswordString = newUserPassword.getText().toString();
+
+
                 //check to see if the email already exists
                 Cursor checkExistingEmail = db.rawQuery("select EmailAddress " +
                                 "from User " +
                                 "WHERE EmailAddress = ?",
-                        new String[]{String.valueOf(newUserEmail)});
+                        new String[]{newEmailString});
 
 
                 //if the attempted email does not exist... put it in
                 if (checkExistingEmail.getCount() < 1) {
                     RookLochDBOperations dbOperations = new RookLochDBOperations();
 
-                    dbOperations.insertUser(db, newUserFirstName, newUserLastName.toString(), newUserEmail.toString(), false);
+                    dbOperations.insertUser(db, newFirstNameString, newLastNameString, newEmailString, false);
 
                     Cursor cursor2 = db.rawQuery("select UserID " +
                                     "FROM User " +
                                     "WHERE EmailAddress = ?",
-                            new String[]{String.valueOf(newUserEmail)});
-                    int newUserID = cursor2.getInt(1);
-                    dbOperations.insertSecurity(db, newUserPassword.toString(), newUserID);
+                            new String[]{newEmailString});
+
+                    int newUserID = 0;
+                    newUserID = cursor2.getInt(1);
+
+                    dbOperations.insertSecurity(db, newPasswordString, newUserID);
 
                     failedRegistation = false;
                 }
@@ -97,7 +101,6 @@ public class RegisterNewUser extends AppCompatActivity {
 
             }
         });
-
 
     }
 }
