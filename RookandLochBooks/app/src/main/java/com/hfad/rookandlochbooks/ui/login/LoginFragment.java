@@ -147,8 +147,6 @@ public class LoginFragment extends Fragment {
         // TODO : initiate successful logged in experience
         Date currentTime = Calendar.getInstance().getTime();
         Boolean sessionIsActive = SessionManager.isSessionActive(currentTime,LoginFragment.this.getContext());
-        SessionManager.startUserSession(LoginFragment.this.getContext(), 1800);
-        SessionManager.storedUserToken(LoginFragment.this.getContext(), "randomUserToken");
         if (getContext() != null && getContext().getApplicationContext() != null) {
             Toast.makeText(getContext().getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
             //Redirect users to Main Page once logged in.

@@ -6,8 +6,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.widget.Toast;
 
 import com.hfad.rookandlochbooks.MainActivity;
+import com.hfad.rookandlochbooks.controller.AppContext;
 import com.hfad.rookandlochbooks.data.model.LoggedInUser;
 import com.hfad.rookandlochbooks.data.RookLochDatabaseHelper;
+import com.hfad.rookandlochbooks.data.session.SessionManager;
 import com.hfad.rookandlochbooks.ui.login.LoginFragment;
 import com.hfad.rookandlochbooks.ui.login.LoginViewModel;
 
@@ -34,6 +36,11 @@ public class LoginDataSource {
             if (cursor != null) {
                 if (cursor.getCount() > 0) {
                     cursor.moveToFirst();
+                    //Delete previous Session
+                    SessionManager.endUserSession(AppContext.getAppContext());
+                    //Setups new Session with 1800 seconds or 30 minutes defined before session expires.
+                    SessionManager.startUserSession(AppContext.getAppContext(), 1800);
+                    SessionManager.storedUserToken(AppContext.getAppContext(), cursor.getString(0));
                 }
 
             }
