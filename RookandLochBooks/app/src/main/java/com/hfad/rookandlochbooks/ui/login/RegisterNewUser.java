@@ -9,13 +9,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-
 import com.hfad.rookandlochbooks.MainActivity;
 import com.hfad.rookandlochbooks.R;
-
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.hfad.rookandlochbooks.data.RookLochDBOperations;
 import com.hfad.rookandlochbooks.data.RookLochDatabaseHelper;
 
@@ -50,10 +47,10 @@ public class RegisterNewUser extends AppCompatActivity {
 
 
                 //check to see if the email already exists
-                Cursor checkExistingEmail = db.rawQuery("select EmailAddress " +
-                                "from User " +
+                Cursor checkExistingEmail = db.rawQuery("SELECT EmailAddress " +
+                                "FROM User " +
                                 "WHERE EmailAddress = ?",
-                        new String[]{newEmailString});
+                                new String[]{newEmailString});
 
 
                 //if the attempted email does not exist... put it in
@@ -62,15 +59,17 @@ public class RegisterNewUser extends AppCompatActivity {
 
                     dbOperations.insertUser(db, newFirstNameString, newLastNameString, newEmailString, false);
 
-                    Cursor cursor2 = db.rawQuery("select UserID " +
+
+                    //get the id of the row that just got pushed up, so can add to password table, too
+                    Cursor cursor2 = db.rawQuery("SELECT UserID, EmailAddress " +
                                     "FROM User " +
                                     "WHERE EmailAddress = ?",
-                            new String[]{newEmailString});
+                                    new String[]{newEmailString});
 
-                    int newUserID = 0;
-                    newUserID = cursor2.getInt(1);
+                    if (cursor2.moveToFirst()) {
+                        dbOperations.insertSecurity(db, newPasswordString, cursor2.getInt(cursor2.getColumnIndex("UserID")));
+                    }
 
-                    dbOperations.insertSecurity(db, newPasswordString, newUserID);
 
                     failedRegistation = false;
                 }
@@ -97,7 +96,6 @@ public class RegisterNewUser extends AppCompatActivity {
                     Toast toast = Toast.makeText(context, text, duration);
                     toast.show();
                 }
-
 
             }
         });
