@@ -59,7 +59,7 @@ public class RegisterNewUser extends AppCompatActivity {
                 if (checkExistingEmail.getCount() < 1) {
                     RookLochDBOperations dbOperations = new RookLochDBOperations();
 
-                    dbOperations.insertUser(db, String.valueOf(newUserFirstName), newUserLastName.toString(), newUserEmail.toString(), false);
+                    dbOperations.insertUser(db, newUserFirstName, newUserLastName.toString(), newUserEmail.toString(), false);
 
                     Cursor cursor2 = db.rawQuery("select UserID " +
                                     "FROM User " +
