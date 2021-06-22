@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,6 +30,7 @@ import com.hfad.rookandlochbooks.MainActivity;
 import com.hfad.rookandlochbooks.data.RookLochDatabaseHelper;
 import com.hfad.rookandlochbooks.data.session.SessionManager;
 import com.hfad.rookandlochbooks.databinding.FragmentLoginBinding;
+import com.hfad.rookandlochbooks.ui.login.RegisterNewUser;
 
 import com.hfad.rookandlochbooks.R;
 import android.database.sqlite.SQLiteDatabase;
@@ -44,7 +46,6 @@ public class LoginFragment extends Fragment {
     private FragmentLoginBinding binding;
     private RookLochDatabaseHelper dbHelper;
     private Context context;
-
 
     @Nullable
     @Override
@@ -67,6 +68,7 @@ public class LoginFragment extends Fragment {
         final EditText passwordEditText = binding.password;
         final Button loginButton = binding.login;
         final ProgressBar loadingProgressBar = binding.loading;
+        final Button registerNewUserBtn = getView().findViewById(R.id.registerNewUserBtn);
 
         loginViewModel.getLoginFormState().observe(getViewLifecycleOwner(), new Observer<LoginFormState>() {
             @Override
@@ -137,6 +139,15 @@ public class LoginFragment extends Fragment {
                 loadingProgressBar.setVisibility(View.VISIBLE);
                 loginViewModel.login(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString(),setupDBList());
+
+            }
+        });
+
+        registerNewUserBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent k = new Intent(getActivity(), com.hfad.rookandlochbooks.ui.login.RegisterNewUser.class);
+                startActivity(k);
 
             }
         });

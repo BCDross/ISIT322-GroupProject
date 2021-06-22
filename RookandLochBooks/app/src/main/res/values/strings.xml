@@ -1,10 +1,12 @@
 <resources>
     <string name="app_name">Rook and Loch Books</string>
     <!-- Strings related to login -->
+    <string name="login_title">Please Log In</string>
     <string name="login">Login</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in">Sign In</string>
+    <string name="action_register">Sign Up!</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="welcome">"Welcome !"</string>
     <string name="invalid_username">Not a valid username</string>
@@ -12,6 +14,13 @@
     <string name="login_failed">"Login failed"</string>
     <string name="title_activity_scrolling">ScrollingActivity</string>
     <string name="camera">Camera</string>
+
+    <!-- strings related to new user register -->
+    <string name="register_title">Register New User</string>
+    <string name="registerButton">Register</string>
+    <string name="promptFName">First Name</string>
+    <string name="promptLName">Last Name</string>
+
 
     <!-- Strings related to the navigation -->
     <string name="action_settings">Settings</string>

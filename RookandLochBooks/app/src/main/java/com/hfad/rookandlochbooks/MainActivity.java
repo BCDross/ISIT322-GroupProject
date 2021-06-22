@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         Date currentTime = Calendar.getInstance().getTime();
         Boolean sessionIsActive = SessionManager.isSessionActive(currentTime,this);
         RookLochDatabaseHelper dbHelper = new RookLochDatabaseHelper(this);
+        dbHelper.getReadableDatabase();
 
 /*
         try {
