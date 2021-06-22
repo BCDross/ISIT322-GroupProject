@@ -1,10 +1,8 @@
 package com.hfad.rookandlochbooks.data;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 public class
 RookLochDatabaseHelper extends SQLiteOpenHelper {
@@ -48,7 +46,7 @@ RookLochDatabaseHelper extends SQLiteOpenHelper {
     // incremental upgrades.
     private void updateMyDatabase(SQLiteDatabase db, int oldVersion, int newVersion) {
             //This creates a new database that is empty.
-            RockLochDBOperations dbOperations= new RockLochDBOperations();
+            RookLochDBOperations dbOperations= new RookLochDBOperations();
 
             if (oldVersion < 1) {
             db.execSQL("CREATE TABLE Book (BookID INTEGER PRIMARY KEY AUTOINCREMENT, "
