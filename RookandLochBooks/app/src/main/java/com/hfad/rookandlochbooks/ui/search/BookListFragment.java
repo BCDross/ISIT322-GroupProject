@@ -54,6 +54,8 @@ public class BookListFragment extends Fragment {
 
         JsonObjectRequest jsonObjectRequest = BookAPIController.getBookList(url,context,recyclerView);
         requestQueue.add(jsonObjectRequest);
+
+
         return binding.getRoot();
     }
 
@@ -73,5 +75,6 @@ public class BookListFragment extends Fragment {
             }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+
     }
 }
