@@ -5,6 +5,10 @@ import android.content.Context;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.hfad.rookandlochbooks.data.model.DBBook;
+import com.hfad.rookandlochbooks.data.model.DBBookShelf;
+import com.hfad.rookandlochbooks.data.model.DBLinkedBookBookshelf;
+
 public class RookLochDBOperations {
 
     private RookLochDatabaseHelper dbHelper;
@@ -64,6 +68,13 @@ public class RookLochDBOperations {
         userValues.put("BookID", bookID);
         userValues.put("BookshelfID", bookshelfID);
         db.insert("LinkBookBookshelf", null, userValues);
+    }
+
+    public static void AssociateBookToShelf (SQLiteDatabase db, DBBook dbBook, DBBookShelf dbBookShelf, DBLinkedBookBookshelf dbLinkedBookBookshelf){
+
+        insertBook(db,dbBook.getTitle(),dbBook.getAuthor(), dbBook.getISBN(),dbBook.getGenre(), dbBook.getDescription());
+        insertBookshelf(db, dbBookShelf.getName(),dbBookShelf.getDescription(),dbBookShelf.getUserid());
+        insertBookBookshelf(db,dbLinkedBookBookshelf.getbookid(),dbLinkedBookBookshelf.getBookshelfid());
     }
 
 }

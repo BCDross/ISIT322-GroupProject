@@ -1,11 +1,11 @@
 package com.hfad.rookandlochbooks.data.model;
 
 public class DBLinkedBookBookshelf {
-    private int linkedid,reviewid,bookshelfid;
+    private int linkedid,bookid,bookshelfid;
 
-    public DBLinkedBookBookshelf(int linkedid, int reviewid, int bookshelfid) {
+    public DBLinkedBookBookshelf(int linkedid, int bookid, int bookshelfid) {
         this.linkedid = linkedid;
-        this.reviewid = reviewid;
+        this.bookid = bookid    ;
         this.bookshelfid = bookshelfid;
     }
 
@@ -17,12 +17,12 @@ public class DBLinkedBookBookshelf {
         this.linkedid = linkedid;
     }
 
-    public int getReviewid() {
-        return reviewid;
+    public int getbookid() {
+        return bookid;
     }
 
-    public void setReviewid(int reviewid) {
-        this.reviewid = reviewid;
+    public void setbookid(int reviewid) {
+        this.bookid = reviewid;
     }
 
     public int getBookshelfid() {
