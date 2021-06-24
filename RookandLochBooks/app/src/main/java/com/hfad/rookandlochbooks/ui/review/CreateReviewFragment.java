@@ -11,28 +11,41 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.hfad.rookandlochbooks.R;
+import com.hfad.rookandlochbooks.databinding.FragmentCreateReviewBinding;
 
 public class CreateReviewFragment extends Fragment {
 
-    private CreateReviewViewModel mViewModel;
+    private CreateReviewViewModel createReviewViewModel;
+    private FragmentCreateReviewBinding binding;
+    private Button btnSubmit;
+    private Button btnCancel;
+    private String strTitle;
+    private String strDescription;
+    private EditText strText;
 
     public static CreateReviewFragment newInstance() {
         return new CreateReviewFragment();
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         container.removeAllViews();
-        return inflater.inflate(R.layout.fragment_create_review, container, false);
+        createReviewViewModel = new ViewModelProvider(this).get(CreateReviewViewModel.class);
+
+
+
+        return root;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(CreateReviewViewModel.class);
+        createReviewViewModel = new ViewModelProvider(this).get(CreateReviewViewModel.class);
         // TODO: Use the ViewModel
     }
 
