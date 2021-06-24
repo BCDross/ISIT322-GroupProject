@@ -54,7 +54,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.Bookshelf> {
 
             holder.title.setText(book.getTitle().toString());
             holder.description.setText(book.getDescription().toString());
-            holder.rating.setText(book.getAverageRating().toString());
+            holder.rating.setText("Rating: " + book.getAverageRating().toString() + "/5");
             holder.author.setText(authors);
 
             Glide.with(context)

@@ -24,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hfad.rookandlochbooks.data.RookLochDBOperations;
@@ -77,6 +78,9 @@ public class CreateReviewFragment extends Fragment {
         btnSubmit = binding.buttonSubmit2;  //for testing purposes it has been changed to "2" in all locations
         btnCancel = binding.buttonCancel;
 
+        TextView textViewRating = binding.textViewHeading;
+        textViewRating.setText("Create a Review for \"" + bTitle + "\"");
+
 
         //set a listener on the submit button
         Button reviewButton = (Button) root.findViewById(R.id.buttonSubmit2); //for testing purposes, old method of view finding has been inserted
@@ -116,6 +120,7 @@ public class CreateReviewFragment extends Fragment {
                                 "AND Title = ? " +
                                 "AND UserID = ?",
                         new String[]{newReviewDescription, newReviewTitle, String.valueOf(userID)});
+
 
                 //if submission was successful, toast and send back to....
                 if (checkSubmission.getCount() == 1) {
@@ -175,7 +180,6 @@ public class CreateReviewFragment extends Fragment {
                         .commit();
             }
         });
-
 
 
 
