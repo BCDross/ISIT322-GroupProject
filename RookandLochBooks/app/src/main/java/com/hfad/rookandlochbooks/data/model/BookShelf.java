@@ -1,38 +1,39 @@
 package com.hfad.rookandlochbooks.data.model;
 
 public class BookShelf {
-    private String ID;
-    // BOOK_STATUS_SEEKING = 1;
-    //  BOOK_STATUS_OWNED = 0;
-    private int status;
-    private String title, rating, author, ISBN;
-
-    public BookShelf(String ID, int status, String title, String rating, String author, String ISBN) {
+    private int ID;
+    private String title, author, ISBN,genre,description;
+    public BookShelf(int ID, String title, String author, String ISBN, String genre, String description) {
         this.ID = ID;
-        this.status = status;
         this.title = title;
-        this.rating = rating;
         this.author = author;
         this.ISBN = ISBN;
-    }
-    public BookShelf(String ID, String title, String rating, String author, String ISBN) {
-        this.ID = ID;
-        this.status = 2;
-        this.title = title;
-        this.rating = rating;
-        this.author = author;
-        this.ISBN = ISBN;
+        this.genre = genre;
+        this.description = description;
     }
 
+    public int getID() {
+        return ID;
+    }
 
+    public String getTitle() {
+        return title;
+    }
 
+    public String getAuthor() {
+        return author;
+    }
 
-    /*
-    *   bookValues.put("Title", title);
-        bookValues.put("Author", author);
-        bookValues.put("ISBN", isbn);
-        bookValues.put("Genre", genre);
-        bookValues.put("Description", description);
-        db.insert("Book", null, bookValues);
-    *
-    * */
+    public String getISBN() {
+        return ISBN;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+}
