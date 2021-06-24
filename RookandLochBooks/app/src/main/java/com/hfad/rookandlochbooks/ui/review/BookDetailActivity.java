@@ -19,23 +19,24 @@ public class BookDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_book_details);
 
+        //get the page elements
         ImageView imageViewBook =findViewById(R.id.imageViewBooks);
         TextView textViewTitle = findViewById(R.id.textViewTitle);
         TextView textViewRating = findViewById(R.id.textViewRating);
         TextView textViewDescription = findViewById(R.id.textViewDescription);
 
+        //open the bundle - WHATS INSIDE??? OH BOY
         Bundle bundle = getIntent().getExtras();
         String bTitle = bundle.getString("title");
         String bDescription = bundle.getString("description");
         Integer bAverageRating = bundle.getInt("rating");
         String bThumbnail = bundle.getString("thumbnail");
 
-
+        //put book details on the page
         Glide.with(this).load(bThumbnail).into(imageViewBook);
         textViewTitle.setText(bTitle.toString());
-        textViewRating.setText(bAverageRating.toString());
+        textViewRating.setText("Rating: " + bAverageRating.toString() + "/5");
         textViewDescription.setText(bDescription.toString());
-
 
 
         //going to BookCreateReviewFragment...
@@ -48,17 +49,18 @@ public class BookDetailActivity extends AppCompatActivity {
                 openFragment2();
             }
 
-            int userID = 69; //gets the session userID to pass it through (test) this line is basically nonsense, its very late and im out of tea
-
-            //this is clever, I like it. makes a bundle of goodies.
+            //when you press the button to go make a new review
             private void openFragment2() {
                 Bundle bundle = new Bundle();
-                bundle.putInt("userID",userID); //(name:value) - saves to the bundle and is referencable on receiving side by: bundle.getInt("userID", whereSaveVarName); i think...
-                //anything else you want to put in the bundle to pass to this next fragment? put it here
+                //pass the book details to the review so they can be passed back
+                bundle.putString("bTitle", bTitle);
+                bundle.putString("bDescription", bDescription);
+                bundle.putInt("bAverageRating", bAverageRating);
+                bundle.putString("bThumbnail", bThumbnail);
                 CreateReviewFragment destination = new CreateReviewFragment();
                 destination.setArguments(bundle);
                 supportFragmentManager.beginTransaction()
-                        .replace(R.id.bookDetails2, destination, "something_here")
+                        .replace(R.id.bookDetails2, destination, "createBookReviewTag")
                         .setReorderingAllowed(true)
                         .addToBackStack(null) // name can be null
                         .commit();
