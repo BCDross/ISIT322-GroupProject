@@ -1,16 +1,20 @@
 package com.hfad.rookandlochbooks;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -29,11 +33,14 @@ import com.hfad.rookandlochbooks.ui.login.LoginFragment;
 
 import java.util.*;
 
+import static android.content.ContentValues.TAG;
+
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
     private SQLiteDatabase db;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,22 +55,6 @@ public class MainActivity extends AppCompatActivity {
         Date currentTime = Calendar.getInstance().getTime();
         Boolean sessionIsActive = SessionManager.isSessionActive(currentTime,this);
         RookLochDatabaseHelper dbHelper = new RookLochDatabaseHelper(this);
-
-
-/*
-        try {
-            //Get reference to the database
-            db = dbHelper.getReadableDatabase();
-            RookLochDBOperations.insertBook(db, "A Darker sssShade of Magic", "V.E. Schwab", "979-0765376459", "Fantasy", "A story of the four Londons, and a man that can walk between them, and the dangers that come from being the last of a dying race.");
-        }catch (SQLiteException e){
-            Toast.makeText(getApplicationContext(),"Exception: SQLite DB is unavailable",Toast.LENGTH_LONG).show();
-
-            Log.d(TAG, "DB_Execute Failure: " + e.getMessage().toString());
-        } finally {
-            //db.close();
-        }
-*/
-
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
@@ -73,6 +64,26 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+        //To change the Nav header text, I needed  to instantiate the getHeaderView
+        View headerView = navigationView.getHeaderView(0);
+
+        //Once defined, I can now find the text views on the Nav Header section
+        TextView loggedInAcct = (TextView) headerView.findViewById(R.id.LoggedInAcct);
+        TextView loggedInDisplayName = (TextView) headerView.findViewById(R.id.LoggedInDisplayName);
+        String UserID = SessionManager.getUserToken(this);
+        db = dbHelper.getReadableDatabase();
+/*
+
+        try {
+            //Get reference to the database
+
+
+        }catch (SQLiteException e){
+            Toast.makeText(getApplicationContext(),"Exception: SQLite DB is unavailable",Toast.LENGTH_LONG).show();
+            Log.d(TAG, "DB_Execute Failure: " + e.getMessage().toString());
+        }
+*/
+
         if (!sessionIsActive) {
             supportFragmentManager.beginTransaction()
                     .replace(binding.drawerLayout.getId(),new LoginFragment(), "Fragment_TAG")
@@ -82,16 +93,7 @@ public class MainActivity extends AppCompatActivity {
             //    Intent intent = new Intent(this, LoginFragment.class);
             //   startActivity(intent);
         }
-        String UserID = SessionManager.getUserToken(this);
 
-        //To change the Nav header text, I needed  to instantiate the getHeaderView
-        View headerView = navigationView.getHeaderView(0);
-        //Once defined, I can now find the text views on the Nav Header section
-        TextView loggedInAcct = (TextView) headerView.findViewById(R.id.LoggedInAcct);
-        TextView loggedInDisplayName = (TextView) headerView.findViewById(R.id.LoggedInDisplayName);
-
-
-        db = dbHelper.getReadableDatabase();
         Cursor cursor = db.rawQuery("select U.UserID,FirstName,LastName,EmailAddress,Password from User U inner join Security S on S.UserID=U.UserID WHERE "
                         + "U.UserID =?",
                 new String[]{UserID.toString()});
