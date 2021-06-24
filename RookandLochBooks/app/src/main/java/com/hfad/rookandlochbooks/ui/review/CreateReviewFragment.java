@@ -39,7 +39,10 @@ public class CreateReviewFragment extends Fragment {
 
 
 
-        return root;
+        View view = inflater.inflate(R.layout.fragment_book_details, container, false);
+
+
+        return view;
     }
 
     @Override
