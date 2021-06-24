@@ -1,9 +1,10 @@
 package com.hfad.rookandlochbooks.data.model;
 
-public class BookShelf {
+public class DBBook {
+
     private int ID;
     private String title, author, ISBN,genre,description;
-    public BookShelf(int ID, String title, String author, String ISBN, String genre, String description) {
+    public DBBook(int ID, String title, String author, String ISBN, String genre, String description) {
         this.ID = ID;
         this.title = title;
         this.author = author;
@@ -14,6 +15,30 @@ public class BookShelf {
 
     public int getID() {
         return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public void setISBN(String ISBN) {
+        this.ISBN = ISBN;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getTitle() {
