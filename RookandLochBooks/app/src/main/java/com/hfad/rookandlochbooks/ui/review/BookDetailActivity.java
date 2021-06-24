@@ -11,8 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
 import com.bumptech.glide.Glide;
-import com.hfad.rookandlochbooks.ui.login.LoginFragment;
-import com.hfad.rookandlochbooks.ui.search.SearchFragment;
 
 public class BookDetailActivity extends AppCompatActivity {
 
@@ -25,7 +23,6 @@ public class BookDetailActivity extends AppCompatActivity {
         TextView textViewTitle = findViewById(R.id.textViewTitle);
         TextView textViewRating = findViewById(R.id.textViewRating);
         TextView textViewDescription = findViewById(R.id.textViewDescription);
-        Button btnReview = findViewById(R.id.btn_review);
 
         Bundle bundle = getIntent().getExtras();
         String bTitle = bundle.getString("title");
@@ -39,20 +36,34 @@ public class BookDetailActivity extends AppCompatActivity {
         textViewRating.setText(bAverageRating.toString());
         textViewDescription.setText(bDescription.toString());
 
-        btnReview.setOnClickListener(new View.OnClickListener() {
+
+
+        //going to BookCreateReviewFragment...
+        FragmentManager supportFragmentManager = this.getSupportFragmentManager();
+        Button reviewButton = (Button) this.findViewById(R.id.btn_review);
+        reviewButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                FragmentManager supportFragmentManager = getSupportFragmentManager();
+            public void onClick(View v) { openFragment(); }
+
+            int userID = 69; //gets the session userID to pass it through (test) this line is basically nonsense, its very late and im out of tea
+
+
+            //this is clever, I like it. makes a bundle of goodies.
+            private void openFragment() {
+                Bundle bundle = new Bundle();
+                bundle.putInt("userID",userID); //(name:value) - saves to the bundle and is referencable on receiving side by: bundle.getInt("userID", whereSaveVarName); i think...
+                //anything else you want to put in the bundle to pass to this next fragment? put it here
+                CreateReviewFragment destination = new CreateReviewFragment();
+                destination.setArguments(bundle);
                 supportFragmentManager.beginTransaction()
-                        .replace(R.id.bookdetail, new CreateReviewFragment(), "Fragment_Book_TAG")
+                        .replace(R.id.bookDetails, destination, "Fragment_TAG")
                         .setReorderingAllowed(true)
                         .addToBackStack(null) // name can be null
                         .commit();
-
             }
         });
+
     }
+
+
 }
-
-
-
