@@ -5,18 +5,11 @@ import android.content.Context;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.hfad.rookandlochbooks.data.model.Book;
-
-import java.util.ArrayList;
-
-public class RockLochDBOperations {
+public class RookLochDBOperations {
 
     private RookLochDatabaseHelper dbHelper;
 
-    public void updateStatusOfBooks(ArrayList<Book> books) {
-        for (Book book : books)
-            //book.setStatus(getBookStatus(book.get));
-    }
+
     public static void insertBook(SQLiteDatabase db, String title, String author, String isbn, String genre, String description) {
         ContentValues bookValues = new ContentValues();
         bookValues.put("Title", title);

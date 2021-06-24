@@ -1,10 +1,8 @@
 package com.hfad.rookandlochbooks.data;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 public class
 RookLochDatabaseHelper extends SQLiteOpenHelper {
@@ -47,10 +45,10 @@ RookLochDatabaseHelper extends SQLiteOpenHelper {
     // This is the update method that does all the work. Needs to have a new if statement for each version to be able to do
     // incremental upgrades.
     private void updateMyDatabase(SQLiteDatabase db, int oldVersion, int newVersion) {
-        //This creates a new database that is empty.
-        RockLochDBOperations dbOperations= new RockLochDBOperations();
+            //This creates a new database that is empty.
+            RookLochDBOperations dbOperations= new RookLochDBOperations();
 
-        if (oldVersion < 1) {
+            if (oldVersion < 1) {
             db.execSQL("CREATE TABLE Book (BookID INTEGER PRIMARY KEY AUTOINCREMENT, "
             + "TITLE TEXT, "
             + "AUTHOR TEXT, "
@@ -116,11 +114,12 @@ RookLochDatabaseHelper extends SQLiteOpenHelper {
         }
 
         //This adds a new columns to the table. This is currently just a placeholder for future development.
-        if (oldVersion < 2) {
-            //db.execSQL("ALTER TABLE Book ADD COLUMN AUTHOR TEXT;");
-            Log.d(TAG, "updateMyDatabase: Where alter table call is made");
-        }
+//        if (oldVersion < 2) {
+//            //db.execSQL("ALTER TABLE Book ADD COLUMN AUTHOR TEXT;");
+//            Log.d(TAG, "updateMyDatabase: Where alter table call is made");
+//        }
 
         //db.close();
     }
+
 }
