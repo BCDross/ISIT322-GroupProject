@@ -34,6 +34,8 @@ public class CreateReviewFragment extends Fragment {
     private Button btnSubmit;
     private Button btnCancel;
 
+    public CreateReviewFragment() {}
+
     public static CreateReviewFragment newInstance() {
         return new CreateReviewFragment();
     }
@@ -41,28 +43,34 @@ public class CreateReviewFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        RookLochDatabaseHelper dbHelper = new RookLochDatabaseHelper(this);
+
+        RookLochDatabaseHelper dbHelper = new RookLochDatabaseHelper(getContext());
         db = dbHelper.getWritableDatabase();
-        String UserID = SessionManager.getUserToken(this);
+        String UserID = SessionManager.getUserToken(getContext());
         final int userID = Integer.parseInt(UserID);
 
         container.removeAllViews();
+
         createReviewViewModel = new ViewModelProvider(this).get(CreateReviewViewModel.class);
         binding = FragmentCreateReviewBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         FragmentManager supportFragmentManager = getActivity().getSupportFragmentManager();
 
-        btnSubmit = binding.buttonSubmit;
+        btnSubmit = binding.buttonSubmit2;
         btnCancel = binding.buttonCancel;
 
-        btnSubmit.setOnClickListener(new View.OnClickListener() {
+        Button reviewButton = (Button) root.findViewById(R.id.buttonSubmit2);
+        reviewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) { openFragment(); }
-            // Verify that the text boxes have text in them.
-            String newReviewTitle = binding.editTextTextReviewTitle.getText().toString();
-            String newReviewDescription = binding.editTextTextReviewDescription.getText().toString();
 
+            //press submit button
             private void openFragment() {
+                //take from the boxes
+                String newReviewTitle = binding.editTextTextReviewTitle.getText().toString();
+                String newReviewDescription = binding.editTextTextReviewDescription.getText().toString();
+
+                // Verify that the text boxes have text in them.
                 if (binding.editTextTextReviewTitle.getText().toString().isEmpty() && binding.editTextTextReviewDescription.getText().toString().isEmpty()) {
                     binding.editTextTextReviewTitle.setError("Please enter review Title.");
                     binding.editTextTextReviewDescription.setError("Please enter review description.");
@@ -79,13 +87,26 @@ public class CreateReviewFragment extends Fragment {
                 // Save review to the database now.
                 RookLochDBOperations dbOperations = new RookLochDBOperations();
                 dbOperations.insertReview(db, newReviewTitle, newReviewDescription, userID);
+
+
+                //check if submit is successful
+
+
+
+                //if success, toast and send back to.... ??
+
+
+
+                //if not success, toast and do nothing
+
+
             }
         });
 
-        View view = inflater.inflate(R.layout.fragment_book_details, container, false);
 
 
-        return view;
+
+        return root;
     }
 
     @Override

@@ -41,22 +41,24 @@ public class BookDetailActivity extends AppCompatActivity {
         //going to BookCreateReviewFragment...
         FragmentManager supportFragmentManager = this.getSupportFragmentManager();
         Button reviewButton = (Button) this.findViewById(R.id.btn_review);
+
         reviewButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) { openFragment(); }
+            public void onClick(View v) {
+                openFragment2();
+            }
 
             int userID = 69; //gets the session userID to pass it through (test) this line is basically nonsense, its very late and im out of tea
 
-
             //this is clever, I like it. makes a bundle of goodies.
-            private void openFragment() {
+            private void openFragment2() {
                 Bundle bundle = new Bundle();
                 bundle.putInt("userID",userID); //(name:value) - saves to the bundle and is referencable on receiving side by: bundle.getInt("userID", whereSaveVarName); i think...
                 //anything else you want to put in the bundle to pass to this next fragment? put it here
                 CreateReviewFragment destination = new CreateReviewFragment();
                 destination.setArguments(bundle);
                 supportFragmentManager.beginTransaction()
-                        .replace(R.id.bookDetails, destination, "Fragment_TAG")
+                        .replace(R.id.bookDetails2, destination, "something_here")
                         .setReorderingAllowed(true)
                         .addToBackStack(null) // name can be null
                         .commit();
