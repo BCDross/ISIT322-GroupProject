@@ -11,13 +11,25 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.RequestQueue;
+import com.hfad.rookandlochbooks.data.model.Book;
 import com.hfad.rookandlochbooks.databinding.FragmentBookshelfBinding;
+
+import java.util.List;
+
 
 public class BookshelfFragment extends Fragment {
 
     private BookshelfViewModel bookshelfViewModel;
     private FragmentBookshelfBinding binding;
+    private RequestQueue requestQueue;
+    private String url;
+    private List<Book> bookList;
+    // Require Empty Constructor
+    public BookshelfFragment() {
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -28,11 +40,11 @@ public class BookshelfFragment extends Fragment {
         binding = FragmentBookshelfBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textBookshelf;
+        final RecyclerView rvView = binding.rvBookShelf;
         bookshelfViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
-                textView.setText(s);
+//                rvView.setAdapter();;
             }
         });
         return root;
