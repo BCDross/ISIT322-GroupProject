@@ -4,8 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+<<<<<<< HEAD
     tools:context=".ui.review.BookDetailsFragment"
     android:id="@+id/bookDetails2">
+=======
+    android:id="@+id/bookdetail"
+    tools:context=".ui.review.BookDetailsFragment">
+>>>>>>> 1b43a8b2e4aeac6179856afe0fc48e538b48d368
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
