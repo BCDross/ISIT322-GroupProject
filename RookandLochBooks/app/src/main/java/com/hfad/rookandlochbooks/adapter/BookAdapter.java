@@ -14,7 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
+//Import GLide API for production use
 import com.bumptech.glide.Glide;
 import com.hfad.rookandlochbooks.R;
 import com.hfad.rookandlochbooks.controller.AppContext;
@@ -52,7 +52,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.Bookshelf> {
     public void onBindViewHolder(@NonNull @org.jetbrains.annotations.NotNull Bookshelf holder, int position) {
         Book book = bookList.get(position);
         Log.d(getClass().getSimpleName(), "Booklist Position: " + position);
-
+        //assign detail for view binder
         try {
             holder.title.setText(book.getTitle().toString());
             holder.description.setText(book.getDescription().toString());
@@ -64,7 +64,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.Bookshelf> {
                     .into(holder.imageView);
 
             holder.linearLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
+                @Override //passing detail over to BookDetailActivity class
                 public void onClick(View v) {
                     Intent intent = new Intent(context, BookDetailActivity.class);
                     Bundle bundle = new Bundle();
