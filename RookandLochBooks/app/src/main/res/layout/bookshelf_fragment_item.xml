@@ -10,5 +10,5 @@
     tools:context=".ui.bookshelf.BookshelfFragment">
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"/>
 </androidx.recyclerview.widget.RecyclerView>

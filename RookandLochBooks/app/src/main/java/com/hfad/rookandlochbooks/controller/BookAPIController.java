@@ -15,6 +15,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.hfad.rookandlochbooks.adapter.BookAdapter;
 import com.hfad.rookandlochbooks.data.model.Book;
+import com.hfad.rookandlochbooks.data.model.IndustryIdentifier;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
@@ -56,6 +57,7 @@ public class BookAPIController {
                     for(int i=0;i<jsonItems.length();i++){
                         // Get current json object
                         JSONObject jsonObject = jsonItems.getJSONObject(i);
+                        String id = jsonObject.getString("id");
                         JSONObject bookVolumeInfo = jsonObject.getJSONObject("volumeInfo");
                         String title= bookVolumeInfo.getString("title");
                         String description = (bookVolumeInfo.has("description")) ? description = bookVolumeInfo.getString("description"): "None";
@@ -72,10 +74,24 @@ public class BookAPIController {
                         } else {
                             authors.add ("Unknown");
                         }
+
+
+                        List<IndustryIdentifier> ISBN =new ArrayList<>();
+                        if (bookVolumeInfo.has("industryIdentifiers")) {
+                            // Extract the JSONArray for the key called "authors"
+                            JSONArray ISBNArray = bookVolumeInfo.getJSONArray("industryIdentifiers");
+                            for (int j = 0; j < ISBNArray.length(); j++) {
+                                IndustryIdentifier d = new IndustryIdentifier();
+                                JSONObject _jsonObject = ISBNArray.getJSONObject(j);
+                                d.setType(_jsonObject.getString("type")) ;
+                                d.setIdentifier(_jsonObject.getString("identifier"));
+                                ISBN.add(d);
+                            }
+                        }
                         JSONObject ImageSource = bookVolumeInfo.getJSONObject("imageLinks");
                         String thumbnails = ImageSource.getString("smallThumbnail");
                         String lrgThumbnails = ImageSource.getString("thumbnail");
-                        Book book = new Book(title, authors,description,rating,thumbnails,lrgThumbnails);
+                        Book book = new Book(title, authors,description,rating,thumbnails,lrgThumbnails,id,ISBN);
                         bookList.add (book);
                     }
                 }catch (JSONException e){
@@ -89,6 +105,7 @@ public class BookAPIController {
             }
 
             private void pagination() {
+                //Added support for pagenation but didn't complete full implementation.     Save for anotehr day.
                 recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
                     @Override
                     public void onScrollStateChanged(@NonNull @NotNull RecyclerView recyclerView, int newState) {

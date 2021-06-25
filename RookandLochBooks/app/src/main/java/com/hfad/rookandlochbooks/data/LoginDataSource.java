@@ -39,7 +39,7 @@ public class LoginDataSource {
                     //Delete previous Session
                     SessionManager.endUserSession(AppContext.getAppContext());
                     //Setups new Session with 1800 seconds or 30 minutes defined before session expires.
-                    SessionManager.startUserSession(AppContext.getAppContext(), 1800);
+                    SessionManager.startUserSession(AppContext.getAppContext(), 600);
                     SessionManager.storedUserToken(AppContext.getAppContext(), cursor.getString(0));
                 }
 

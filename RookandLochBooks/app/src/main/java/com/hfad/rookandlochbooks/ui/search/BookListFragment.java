@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -48,13 +49,13 @@ public class BookListFragment extends Fragment {
         container.removeAllViews();
         binding = FragmentBooklistListBinding.inflate(inflater,container,false);
         Context context = binding.getRoot().getContext();
+        //Using VIew Binding to assosciate the RecyclerVIew list  Fragment BookListListBinding to this fragment.
         RecyclerView recyclerView = (RecyclerView) binding.recycleView;
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         requestQueue = BookAPIController.getmInstance(context).getRequestQueue();
 
         JsonObjectRequest jsonObjectRequest = BookAPIController.getBookList(url,context,recyclerView);
         requestQueue.add(jsonObjectRequest);
-
 
         return binding.getRoot();
     }

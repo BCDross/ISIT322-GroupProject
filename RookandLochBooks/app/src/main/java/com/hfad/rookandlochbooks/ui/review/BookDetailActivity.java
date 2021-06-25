@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
 import com.bumptech.glide.Glide;
-
+// Supporting the Return book detail Layout.
 public class BookDetailActivity extends AppCompatActivity {
 
     @Override

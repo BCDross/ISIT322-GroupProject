@@ -12,6 +12,10 @@ public class DBBook {
         this.genre = genre;
         this.description = description;
     }
+    //for simple instantiations
+    public DBBook (){
+
+    }
 
     public int getID() {
         return ID;

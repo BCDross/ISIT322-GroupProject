@@ -50,7 +50,7 @@ android:padding="10dp">
                 android:textSize="26sp" />
 
             <Button
-                android:id="@+id/brn_rvReview"
+                android:id="@+id/btn_rvReview"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"

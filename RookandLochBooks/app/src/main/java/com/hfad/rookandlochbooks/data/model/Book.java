@@ -26,8 +26,9 @@ public class Book {
     private String previewLink;
     private String infoLink;
     private String canonicalVolumeLink;
+    private String id;
 
-    public Book(String title, List<String> authors, String description, Integer averageRating, String bookImages, String lrgBookImages) {
+    public Book(String title, List<String> authors, String description, Integer averageRating, String bookImages, String lrgBookImages, String id, List<IndustryIdentifier> industryIdentifiers ) {
 
         ImageLinks d = new ImageLinks();
         d.setSmallThumbnail(bookImages);
@@ -37,8 +38,16 @@ public class Book {
         this.description = description;
         this.averageRating = averageRating;
         this.imageLinks = d;
+        this.id=id;
+        this.industryIdentifiers = industryIdentifiers;
 
     }
+
+
+    public String getId() {
+        return id ;
+    }
+    public void setId(String id) { this.id = id; }
 
 
     public String getTitle() {

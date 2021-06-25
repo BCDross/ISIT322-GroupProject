@@ -21,6 +21,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.hfad.rookandlochbooks.controller.AppContext;
 import com.hfad.rookandlochbooks.data.RookLochDBOperations;
 import com.hfad.rookandlochbooks.data.RookLochDatabaseHelper;
 import com.hfad.rookandlochbooks.data.session.SessionManager;
@@ -41,9 +43,9 @@ public class CreateReviewFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        RookLochDatabaseHelper dbHelper = new RookLochDatabaseHelper(this);
+        RookLochDatabaseHelper dbHelper = new RookLochDatabaseHelper(AppContext.getAppContext());
         db = dbHelper.getWritableDatabase();
-        String UserID = SessionManager.getUserToken(this);
+        String UserID = SessionManager.getUserToken(AppContext.getAppContext());
         final int userID = Integer.parseInt(UserID);
 
         container.removeAllViews();
@@ -82,10 +84,8 @@ public class CreateReviewFragment extends Fragment {
             }
         });
 
-        View view = inflater.inflate(R.layout.fragment_book_details, container, false);
-
-
-        return view;
+        //View view = inflater.inflate(R.layout.fragment_book_details, container, false);
+        return root;
     }
 
     @Override
