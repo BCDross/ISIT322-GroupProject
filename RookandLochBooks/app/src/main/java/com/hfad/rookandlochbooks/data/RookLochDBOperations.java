@@ -92,6 +92,32 @@ public class RookLochDBOperations {
         insertBookBookshelf(db,dbLinkedBookBookshelf.getbookid(),dbLinkedBookBookshelf.getBookshelfid());
     }
 
+
+    //overloading reusable method used in the validation whether a record exist prior to execution.
+    public static boolean checkIfRecordExist(SQLiteDatabase db, String tableName, String columnName, int columnValue)
+    {
+        //Quick text to validate whether the table exist or not.
+        try
+        {
+            Cursor cursor=db.rawQuery("SELECT "+columnName+" FROM "+tableName+" WHERE "+columnName+"="+columnValue+" ",null);
+            if (cursor.moveToFirst())
+            {
+
+                Log.d("Record  Already Exists", "Table is:"+tableName+" ColumnName:"+columnName);
+                return true;//record Exists
+            }
+            Log.d("New Record  ", "Table is:"+tableName+" ColumnName:"+columnName+" Column Value:"+columnValue);
+
+        }
+        catch(Exception errorException)
+        {
+            Log.d("Exception occured", "Exception occured "+errorException);
+            // db.close();
+        }
+        return false;
+    }
+
+    //overloading reusable method used in the validation whether a record exist prior to execution.
     public static boolean checkIfRecordExist(SQLiteDatabase db, String tableName, String columnName, String columnValue)
     {
         //Quick text to validate whether the table exist or not.
@@ -114,7 +140,7 @@ public class RookLochDBOperations {
         }
         return false;
     }
-
+    //Return a list of all users
     public static List<DBBook> getAllUserData (SQLiteDatabase db){
 
         Cursor cursor = db.rawQuery("select U.UserID,FirstName,LastName,EmailAddress,Password from User U inner join Security S on S.UserID=U.UserID",null);
@@ -129,7 +155,7 @@ public class RookLochDBOperations {
         }
         return DBbookList;
     }
-
+    //return a user profile based on the user information provided.
     public static List<DBBook> getUserData (SQLiteDatabase db, Integer UserID, String username, String password){
         List<DBBook> DBbookList = new ArrayList<DBBook>();
         final Cursor cursor;
