@@ -18,7 +18,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RookAndLochBooks"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.login.RegisterNewUser"></activity>
+        <activity
+            android:name=".ui.login.RegisterNewUser"
+            android:label="Books Are funner"
+            android:theme="@style/Theme.RookAndLochBooks.NoActionBar" />
         <activity
             android:name=".ui.review.BookDetailActivity"
             android:label="Books Are fun"

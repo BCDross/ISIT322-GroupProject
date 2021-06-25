@@ -38,13 +38,10 @@ public class BookDetailsFragment extends Fragment {
 
         container.removeAllViews();
 
-
         View view = inflater.inflate(R.layout.fragment_book_details, container, false);
 
 
-
-
-        //this fragment has been abandoned
+        //has this fragment has been abandoned?
 
 
 
@@ -87,9 +84,6 @@ public class BookDetailsFragment extends Fragment {
 //                        .commit();
 //            }
 //        });
-
-
-
 
         return view;
     }

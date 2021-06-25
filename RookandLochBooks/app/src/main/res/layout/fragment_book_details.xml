@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/bookdetail"
-    tools:context=".ui.review.BookDetailsFragment">
+    tools:context=".ui.review.BookDetailsFragment"
+    android:id="@+id/bookDetails2">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

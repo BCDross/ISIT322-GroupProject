@@ -154,7 +154,7 @@ public class LoginFragment extends Fragment {
     }
 
     private void updateUiWithUser(LoggedInUserView model) {
-        String welcome = getString(R.string.welcome) + model.getDisplayName();
+        String welcome = getString(R.string.welcomePt1) + model.getDisplayName() + getString(R.string.welcomePt2);
         // TODO : initiate successful logged in experience
         Date currentTime = Calendar.getInstance().getTime();
         Boolean sessionIsActive = SessionManager.isSessionActive(currentTime,LoginFragment.this.getContext());
